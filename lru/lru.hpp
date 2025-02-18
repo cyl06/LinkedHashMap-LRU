@@ -1,14 +1,14 @@
 #ifndef SJTU_LRU_HPP
 #define SJTU_LRU_HPP
 
-#include "utility.hpp"
-#include "exceptions.hpp"
 #include "class-integer.hpp"
 #include "class-matrix.hpp"
+#include "exceptions.hpp"
+#include "utility.hpp"
 
 class Hash {
 public:
-    unsigned int operator ()(Integer lhs) const {
+    unsigned int operator()(Integer lhs) const {
         int val = lhs.val;
         return std::hash<int>()(val);
     }
@@ -16,9 +16,7 @@ public:
 
 class Equal {
 public:
-    bool operator ()(const Integer &lhs, const Integer &rhs) const {
-        return lhs.val == rhs.val;
-    }
+    bool operator()(const Integer &lhs, const Integer &rhs) const { return lhs.val == rhs.val; }
 };
 
 namespace sjtu {
@@ -28,14 +26,16 @@ namespace sjtu {
         /**
          * elements
          * add whatever you want
-        */
+         */
+        int a;
 
         // --------------------------
         /**
          * the follows are constructors and destructors
          * you can also add some if needed.
-        */
+         */
         double_list() {}
+
         double_list(const double_list<T> &other) {}
         ~double_list() {}
 
@@ -44,12 +44,12 @@ namespace sjtu {
             /**
              * elements
              * add whatever you want
-            */
+             */
             // --------------------------
             /**
              * the follows are constructors and destructors
              * you can also add some if needed.
-            */
+             */
             iterator() {}
             iterator(const iterator &t) {}
             ~iterator() {}
@@ -72,11 +72,11 @@ namespace sjtu {
             /**
              * if the iter didn't point to a value
              * throw " invalid"
-            */
+             */
             T &operator*() const {}
             /**
              * other operation
-            */
+             */
             T *operator->() const noexcept {}
             bool operator==(const iterator &rhs) const {}
             bool operator!=(const iterator &rhs) const {}
@@ -102,12 +102,12 @@ namespace sjtu {
          *  2nd element of the list after the operation
          *  or nothing if the list after the operation
          *  don't contain 2nd elememt.
-        */
+         */
         iterator erase(iterator pos) {}
 
         /**
          * the following are operations of double list
-        */
+         */
         void insert_head(const T &val) {}
         void insert_tail(const T &val) {}
         void delete_head() {}
@@ -119,25 +119,21 @@ namespace sjtu {
         bool empty() {}
     };
 
-    template<
-        class Key,
-        class T,
-        class Hash = std::hash<Key>,
-        class Equal = std::equal_to<Key> >
+    template<class Key, class T, class Hash = std::hash<Key>, class Equal = std::equal_to<Key>>
     class hashmap {
     public:
         using value_type = pair<const Key, T>;
         /**
          * elements
          * add whatever you want
-        */
+         */
 
         // --------------------------
 
         /**
          * the follows are constructors and destructors
          * you can also add some if needed.
-        */
+         */
         hashmap() {}
         hashmap(const hashmap &other) {}
         ~hashmap() {}
@@ -148,12 +144,12 @@ namespace sjtu {
             /**
              * elements
              * add whatever you want
-            */
+             */
             // --------------------------
             /**
              * the follows are constructors and destructors
              * you can also add some if needed.
-            */
+             */
             iterator() {}
             iterator(const iterator &t) {}
             ~iterator() {}
@@ -161,12 +157,12 @@ namespace sjtu {
             /**
              * if point to nothing
              * throw
-            */
+             */
             value_type &operator*() const {}
 
             /**
              * other operation
-            */
+             */
             value_type *operator->() const noexcept {}
             bool operator==(const iterator &rhs) const {}
             bool operator!=(const iterator &rhs) const {}
@@ -175,44 +171,40 @@ namespace sjtu {
         void clear() {}
         /**
          * you need to expand the hashmap dynamically
-        */
+         */
         void expand() {}
 
         /**
          * the iterator point at nothing
-        */
+         */
         iterator end() const {}
         /**
          * find, return a pointer point to the value
          * not find, return the end (point to nothing)
-        */
+         */
         iterator find(const Key &key) const {}
         /**
          * already have a value_pair with the same key
          * -> just update the value, return false
          * not find a value_pair with the same key
          * -> insert the value_pair, return true
-        */
+         */
         sjtu::pair<iterator, bool> insert(const value_type &value_pair) {}
         /**
          * the value_pair exists, remove and return true
          * otherwise, return false
-        */
+         */
         bool remove(const Key &key) {}
     };
 
-    template<
-        class Key,
-        class T,
-        class Hash = std::hash<Key>,
-        class Equal = std::equal_to<Key> >
+    template<class Key, class T, class Hash = std::hash<Key>, class Equal = std::equal_to<Key>>
     class linked_hashmap : public hashmap<Key, T, Hash, Equal> {
     public:
         typedef pair<const Key, T> value_type;
         /**
          * elements
          * add whatever you want
-        */
+         */
         // --------------------------
         class const_iterator;
 
@@ -221,7 +213,7 @@ namespace sjtu {
             /**
              * elements
              * add whatever you want
-            */
+             */
             // --------------------------
             iterator() {}
             iterator(const iterator &other) {}
@@ -247,7 +239,7 @@ namespace sjtu {
             /**
              * if the iter didn't point to a value
              * throw "star invalid"
-            */
+             */
             value_type &operator*() const {}
             value_type *operator->() const noexcept {}
 
@@ -265,7 +257,7 @@ namespace sjtu {
             /**
              * elements
              * add whatever you want
-            */
+             */
             // --------------------------
             const_iterator() {}
             const_iterator(const iterator &other) {}
@@ -290,7 +282,7 @@ namespace sjtu {
             /**
              * if the iter didn't point to a value
              * throw
-            */
+             */
             const value_type &operator*() const {}
             const value_type *operator->() const noexcept {}
 
@@ -311,7 +303,7 @@ namespace sjtu {
         /**
          * return the value connected with the Key(O(1))
          * if the key not found, throw
-        */
+         */
         T &at(const Key &key) {}
         const T &at(const Key &key) const {}
         T &operator[](const Key &key) {}
@@ -346,31 +338,31 @@ namespace sjtu {
          * and return false
          * if the key of the value_pair doesn't exist in the map
          * add a new element and return true
-        */
+         */
         pair<iterator, bool> insert(const value_type &value) {}
         /**
          * erase the value_pair pointed by the iterator
          * if the iterator points to nothing
          * throw
-        */
+         */
         void remove(iterator pos) {}
         /**
          * return how many value_pairs consist of key
          * this should only return 0 or 1
-        */
+         */
         size_t count(const Key &key) const {}
         /**
          * find the iterator points at the value_pair
          * which consist of key
          * if not find, return the iterator
          * point at nothing
-        */
+         */
         iterator find(const Key &key) {}
     };
 
     class lru {
         using lmap = sjtu::linked_hashmap<Integer, Matrix<int>, Hash, Equal>;
-        using value_type = sjtu::pair<const Integer, Matrix<int> >;
+        using value_type = sjtu::pair<const Integer, Matrix<int>>;
 
     public:
         lru(int size) {}
@@ -378,20 +370,20 @@ namespace sjtu {
         /**
          * save the value_pair in the memory
          * delete something in the memory if necessary
-        */
+         */
         void save(const value_type &v) const {}
         /**
          * return a pointer contain the value
-        */
+         */
         Matrix<int> *get(const Integer &v) const {}
         /**
          * just print everything in the memory
          * to debug or test.
          * this operation follows the order, but don't
          * change the order.
-        */
+         */
         void print() {}
     };
-}
+} // namespace sjtu
 
 #endif

@@ -21,6 +21,6 @@ namespace sjtu {
         template<class U1, class U2>
         pair(pair<U1, U2> &&other) : first(other.first), second(other.second) {}
     };
-}
+} // namespace sjtu
 
 #endif

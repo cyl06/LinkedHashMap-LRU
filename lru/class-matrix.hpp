@@ -1,17 +1,17 @@
 #ifndef SJTU_MATRIX_HPP
 #define SJTU_MATRIX_HPP
 
-#include <iostream>
 #include <iomanip>
-#include <vector>
+#include <iostream>
 #include <stdexcept>
+#include <vector>
 
 template<typename _Td>
 class Matrix {
 protected:
     size_t n_rows = 0;
     size_t n_cols = 0;
-    std::vector<std::vector<_Td> > data;
+    std::vector<std::vector<_Td>> data;
 
     class RowProxy {
         std::vector<_Td> &row;
@@ -19,9 +19,7 @@ protected:
     public:
         RowProxy(std::vector<_Td> &_row) : row(_row) {}
 
-        _Td &operator[](const size_t &pos) {
-            return row[pos];
-        }
+        _Td &operator[](const size_t &pos) { return row[pos]; }
     };
 
     class ConstRowProxy {
@@ -30,26 +28,22 @@ protected:
     public:
         ConstRowProxy(const std::vector<_Td> &_row) : row(_row) {}
 
-        const _Td &operator[](const size_t &pos) const {
-            return row[pos];
-        }
+        const _Td &operator[](const size_t &pos) const { return row[pos]; }
     };
 
 public:
-    Matrix() {};
+    Matrix(){};
 
-    Matrix(const size_t &_n_rows, const size_t &_n_cols)
-        : n_rows(_n_rows), n_cols(_n_cols), data(std::vector<std::vector<_Td> >(n_rows, std::vector<_Td>(n_cols))) {}
+    Matrix(const size_t &_n_rows, const size_t &_n_cols) :
+        n_rows(_n_rows), n_cols(_n_cols), data(std::vector<std::vector<_Td>>(n_rows, std::vector<_Td>(n_cols))) {}
 
-    Matrix(const size_t &_n_rows, const size_t &_n_cols, const _Td &fillValue)
-        : n_rows(_n_rows), n_cols(_n_cols),
-          data(std::vector<std::vector<_Td> >(n_rows, std::vector<_Td>(n_cols, fillValue))) {}
+    Matrix(const size_t &_n_rows, const size_t &_n_cols, const _Td &fillValue) :
+        n_rows(_n_rows), n_cols(_n_cols),
+        data(std::vector<std::vector<_Td>>(n_rows, std::vector<_Td>(n_cols, fillValue))) {}
 
-    Matrix(const Matrix<_Td> &mat)
-        : n_rows(mat.n_rows), n_cols(mat.n_cols), data(mat.data) {}
+    Matrix(const Matrix<_Td> &mat) : n_rows(mat.n_rows), n_cols(mat.n_cols), data(mat.data) {}
 
-    Matrix(Matrix<_Td> &&mat) noexcept
-        : n_rows(mat.n_rows), n_cols(mat.n_cols), data(mat.data) {}
+    Matrix(Matrix<_Td> &&mat) noexcept : n_rows(mat.n_rows), n_cols(mat.n_cols), data(mat.data) {}
 
     Matrix<_Td> &operator=(const Matrix<_Td> &rhs) {
         this->n_rows = rhs.n_rows;
@@ -65,21 +59,13 @@ public:
         return *this;
     }
 
-    inline const size_t &RowSize() const {
-        return n_rows;
-    }
+    inline const size_t &RowSize() const { return n_rows; }
 
-    inline const size_t &ColSize() const {
-        return n_cols;
-    }
+    inline const size_t &ColSize() const { return n_cols; }
 
-    RowProxy operator[](const size_t &Kth) {
-        return RowProxy(this->data[Kth]);
-    }
+    RowProxy operator[](const size_t &Kth) { return RowProxy(this->data[Kth]); }
 
-    const ConstRowProxy operator[](const size_t &Kth) const {
-        return ConstRowProxy(this->data[Kth]);
-    }
+    const ConstRowProxy operator[](const size_t &Kth) const { return ConstRowProxy(this->data[Kth]); }
 
     ~Matrix() = default;
 };

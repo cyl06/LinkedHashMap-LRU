@@ -15,9 +15,7 @@ namespace sjtu {
         exception() {}
         exception(const exception &ec) : variant(ec.variant), detail(ec.detail) {}
 
-        virtual std::string what() {
-            return variant + " " + detail;
-        }
+        virtual std::string what() { return variant + " " + detail; }
     };
 
     class index_out_of_bound : public exception {
@@ -35,6 +33,6 @@ namespace sjtu {
     class container_is_empty : public exception {
         /* __________________________ */
     };
-}
+} // namespace sjtu
 
 #endif

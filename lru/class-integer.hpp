@@ -14,9 +14,7 @@ public:
         counter++;
     }
 
-    bool operator==(const Integer &rhs) {
-        return val == rhs.val;
-    }
+    bool operator==(const Integer &rhs) { return val == rhs.val; }
 };
 
 int Integer::counter = 0;
